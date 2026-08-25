@@ -1,9 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Tema base de la aplicación -->
     <style name="Base.Theme.UDBET" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/DarkBlue</item>
     </style>
 
-    <style name="Theme.UDBET" parent="Base.Theme.UDBET" />
+    <!-- Tema principal -->
+    <style name="Theme.UDBET" parent="Base.Theme.UDBET">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/Green</item>
+    </style>
+
+    <!-- Tema del Splash Screen -->
+    <style name="Theme.UDBET.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/DarkBlue</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+    </style>
+
 </resources>

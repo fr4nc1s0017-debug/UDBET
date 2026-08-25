@@ -5,15 +5,15 @@ plugins {
 android {
     namespace = "udb.edu.sv.dsm.udbet"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }
 
     defaultConfig {
         applicationId = "udb.edu.sv.dsm.udbet"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = 37
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -42,4 +42,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    implementation("androidx.core:core-splashscreen:1.0.1")
 }

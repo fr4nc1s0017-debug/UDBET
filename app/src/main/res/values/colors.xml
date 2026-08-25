@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Colores de la app UDBET -->
+    <color name="DarkBlue">#0E121E</color>
+    <color name="Grey">#222831</color>
+    <color name="Gold">#D4AF37</color>
+    <color name="Green">#1ED760</color>
+
 </resources>
