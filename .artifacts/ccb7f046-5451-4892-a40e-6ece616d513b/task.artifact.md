@@ -1,0 +1,4 @@
+- `[x]` Add missing string resources to `strings.xml`
+- `[x]` Refactor `LoginActivity.kt` to use string resources for Toasts
+- `[x]` Refactor `RegisterActivity.kt` to use string resources for Toasts
+- `[x]` Verify build with `./gradlew assembleDebug`
