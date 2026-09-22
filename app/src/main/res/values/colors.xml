@@ -10,4 +10,9 @@
     <color name="Gold">#D4AF37</color>
     <color name="Green">#1ED760</color>
 
+    <color name="CardBackground">#232D3F</color> <!-- Fondo de cuadros y buscador -->
+    <color name="BalanceBackground">#2A3548</color> <!-- Fondo del saldo -->
+    <color name="TextHint">#8A94A6</color> <!-- Color del texto "Buscar" -->
+    <color name="GreenAccent">#1ED760</color> <!-- Color del borde del menú inferior -->
+
 </resources>

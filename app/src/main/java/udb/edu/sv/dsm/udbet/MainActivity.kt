@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigation =
             findViewById<BottomNavigationView>(R.id.bottomNavigation)
-
+        // Mansajes al sellecionar pantallas
         bottomNavigation.setOnItemSelectedListener { item ->
 
             when (item.itemId) {
