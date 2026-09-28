@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -16,16 +17,23 @@ import com.google.firebase.database.ValueEventListener
 class HomeFragment : Fragment(R.layout.activity_home_fragment) {
 
     private var imgProfile: ImageView? = null
+    private var txtBalance: TextView? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         imgProfile = view.findViewById(R.id.imgProfile)
         val imgProfileCard = view.findViewById<View>(R.id.imgProfileCard)
+        txtBalance = view.findViewById(R.id.txtBalance)
 
         // Tocar la foto de perfil abre la pantalla de usuario
         imgProfileCard.setOnClickListener {
             startActivity(Intent(requireContext(), ProfileActivity::class.java))
+        }
+
+        // Tocar el saldo abre la pantalla de Saldo
+        txtBalance?.setOnClickListener {
+            startActivity(Intent(requireContext(), SaldoActivity::class.java))
         }
 
         // Fútbol y baloncesto llevan a la pestaña de Deportes
@@ -45,13 +53,15 @@ class HomeFragment : Fragment(R.layout.activity_home_fragment) {
     override fun onResume() {
         super.onResume()
         // Se recarga cada vez que este fragment vuelve a primer plano
-        // (p. ej. al volver de ProfileActivity, o al cambiar de pestaña y regresar)
+        // (p. ej. al volver de ProfileActivity o SaldoActivity, o al cambiar de pestaña y regresar)
         loadProfilePicture()
+        loadBalance()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         imgProfile = null
+        txtBalance = null
     }
 
     private fun loadProfilePicture() {
@@ -73,6 +83,23 @@ class HomeFragment : Fragment(R.layout.activity_home_fragment) {
 
             override fun onCancelled(error: DatabaseError) {
                 // Sin conexión o sin permisos: se deja el avatar por defecto
+            }
+        })
+    }
+
+    private fun loadBalance() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val dbRef = FirebaseDatabase.getInstance().reference
+            .child("users").child(uid).child("balance")
+
+        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val balance = snapshot.getValue(Double::class.java) ?: 0.0
+                txtBalance?.text = String.format("$%.2f", balance)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Sin conexión o sin permisos: se deja el valor mostrado hasta ahora
             }
         })
     }

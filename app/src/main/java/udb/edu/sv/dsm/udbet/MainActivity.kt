@@ -1,5 +1,6 @@
 package udb.edu.sv.dsm.udbet
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -72,6 +73,22 @@ class MainActivity : AppCompatActivity() {
             }
 
             selected != null
+        }
+
+        // Si se llegó aquí desde Saldo/Tarjeta/Monto pidiendo una pestaña específica
+        aplicarPestanaSolicitada(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        aplicarPestanaSolicitada(intent)
+    }
+
+    private fun aplicarPestanaSolicitada(intent: Intent) {
+        val tabId = intent.getIntExtra(EXTRA_SELECTED_TAB, -1)
+        if (tabId != -1) {
+            findViewById<BottomNavigationView>(R.id.bottomNavigation).selectedItemId = tabId
         }
     }
 

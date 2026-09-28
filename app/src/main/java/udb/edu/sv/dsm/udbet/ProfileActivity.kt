@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -36,6 +37,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var btnModificarPhone: TextView
     private lateinit var btnActualizar: MaterialButton
     private lateinit var btnCancelar: MaterialButton
+    private lateinit var btnLogOutSeccion: MaterialButton
     private lateinit var btnClose: ImageView
 
     private val auth = FirebaseAuth.getInstance()
@@ -84,6 +86,8 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnActualizar.setOnClickListener { saveChanges() }
+
+        setupBottomNavigation(findViewById<BottomNavigationView>(R.id.bottomNavigationProfile))
 
         loadUserData()
     }
