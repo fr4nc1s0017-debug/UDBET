@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.MutableData
 import com.google.firebase.database.Transaction
+import udb.edu.sv.dsm.udbet.data.setupBottomNavigation
 
 class MontoActivity : AppCompatActivity() {
 
@@ -65,9 +66,6 @@ class MontoActivity : AppCompatActivity() {
             return
         }
 
-        // runTransaction evita que dos operaciones simultáneas (ej. dos retiros a la
-        // vez) dejen el saldo en un estado inconsistente: Firebase reintenta la
-        // transacción si el valor cambió entre la lectura y la escritura.
         balanceRef.runTransaction(object : Transaction.Handler {
             override fun doTransaction(currentData: MutableData): Transaction.Result {
                 val saldoActual = currentData.getValue(Double::class.java) ?: 0.0

@@ -2,27 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/DarkBlue"
-    android:fitsSystemWindows="true"
-    tools:context=".SaldoActivity">
+    android:fitsSystemWindows="true">
 
-    <!-- Botón para salir de la pantalla -->
     <ImageView
         android:id="@+id/btnCloseSaldo"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:contentDescription="Cerrar"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_margin="20dp"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
-        app:tint="#E53935"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:tint="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Contenido central -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -35,6 +31,14 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saldo disponible"
+            android:textColor="@color/TextHint"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
             android:id="@+id/txtSaldoAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,23 +46,7 @@
             android:textColor="@color/white"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:layout_marginBottom="32dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Saldo retirable"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mínimo $20"
-            android:textColor="@color/TextHint"
-            android:textSize="11sp"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="40dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,20 +57,18 @@
                 android:id="@+id/btnRetirar"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="52dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
                 android:text="Retirar"
-                android:textColor="#4CD964"
-                android:textStyle="bold"
-                app:strokeColor="#4CD964"
-                app:strokeWidth="1dp"
+                android:textColor="@color/Green"
+                app:strokeColor="@color/white"
                 app:cornerRadius="12dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDepositar"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="52dp"
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
                 android:text="Depositar"
@@ -91,13 +77,13 @@
                 app:backgroundTint="#4CD964"
                 app:cornerRadius="12dp" />
         </LinearLayout>
+
     </LinearLayout>
 
-    <!-- Barra de navegación inferior (misma que el resto de la app) -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationSaldo"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:background="@color/DarkBlue"
         android:elevation="8dp"
         app:itemBackground="@drawable/nav_item_background"

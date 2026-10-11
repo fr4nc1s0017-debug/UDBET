@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import udb.edu.sv.dsm.udbet.data.setupBottomNavigation
 import java.util.Calendar
 
 class TarjetaActivity : AppCompatActivity() {
@@ -45,11 +46,6 @@ class TarjetaActivity : AppCompatActivity() {
                 Toast.makeText(this, "Ingresa un número de tarjeta válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            // NOTA: esto solo valida el formato para la maqueta del proyecto.
-            // En una app real, el número de tarjeta se envía directo a un procesador
-            // de pagos (Stripe, PayPal, etc.) y nunca se guarda tal cual en tu base
-            // de datos ni pasa por tu propio backend en texto plano.
 
             startActivity(
                 Intent(this, MontoActivity::class.java)

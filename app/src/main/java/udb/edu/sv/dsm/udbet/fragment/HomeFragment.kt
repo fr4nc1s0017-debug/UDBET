@@ -1,4 +1,4 @@
-package udb.edu.sv.dsm.udbet
+package udb.edu.sv.dsm.udbet.fragment
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -13,8 +13,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import udb.edu.sv.dsm.udbet.MainActivity
+import udb.edu.sv.dsm.udbet.ProfileActivity
+import udb.edu.sv.dsm.udbet.R
+import udb.edu.sv.dsm.udbet.SaldoActivity
 
-class HomeFragment : Fragment(R.layout.activity_home_fragment) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var imgProfile: ImageView? = null
     private var txtBalance: TextView? = null
@@ -26,17 +30,14 @@ class HomeFragment : Fragment(R.layout.activity_home_fragment) {
         val imgProfileCard = view.findViewById<View>(R.id.imgProfileCard)
         txtBalance = view.findViewById(R.id.txtBalance)
 
-        // Tocar la foto de perfil abre la pantalla de usuario
         imgProfileCard.setOnClickListener {
             startActivity(Intent(requireContext(), ProfileActivity::class.java))
         }
 
-        // Tocar el saldo abre la pantalla de Saldo
         txtBalance?.setOnClickListener {
             startActivity(Intent(requireContext(), SaldoActivity::class.java))
         }
 
-        // Fútbol y baloncesto llevan a la pestaña de Deportes
         view.findViewById<View>(R.id.cardFutbol).setOnClickListener {
             (activity as? MainActivity)?.navigateToTab(R.id.nav_sports)
         }
@@ -44,7 +45,6 @@ class HomeFragment : Fragment(R.layout.activity_home_fragment) {
             (activity as? MainActivity)?.navigateToTab(R.id.nav_sports)
         }
 
-        // Casino lleva a la pestaña de Casino
         view.findViewById<View>(R.id.cardCasino).setOnClickListener {
             (activity as? MainActivity)?.navigateToTab(R.id.nav_casino)
         }
@@ -52,8 +52,6 @@ class HomeFragment : Fragment(R.layout.activity_home_fragment) {
 
     override fun onResume() {
         super.onResume()
-        // Se recarga cada vez que este fragment vuelve a primer plano
-        // (p. ej. al volver de ProfileActivity o SaldoActivity, o al cambiar de pestaña y regresar)
         loadProfilePicture()
         loadBalance()
     }

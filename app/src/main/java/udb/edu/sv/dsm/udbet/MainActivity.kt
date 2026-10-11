@@ -5,6 +5,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import udb.edu.sv.dsm.udbet.data.EXTRA_SELECTED_TAB
+import udb.edu.sv.dsm.udbet.fragment.BusquedaFragment
+import udb.edu.sv.dsm.udbet.fragment.DeportesFragment
+import udb.edu.sv.dsm.udbet.fragment.HistorialFragment
+import udb.edu.sv.dsm.udbet.fragment.HomeFragment
+import udb.edu.sv.dsm.udbet.fragment.PlaceholderFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,16 +28,12 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
         if (savedInstanceState == null) {
-            // Primera vez que se crea la Activity: se crean los 5 fragments una sola vez.
             homeFragment = HomeFragment()
-            searchFragment = PlaceholderFragment.newInstance("Búsqueda", android.R.drawable.ic_menu_search)
-            sportsFragment = PlaceholderFragment.newInstance("Deportes", android.R.drawable.ic_menu_compass)
+            searchFragment = BusquedaFragment()
+            sportsFragment = DeportesFragment()
             casinoFragment = PlaceholderFragment.newInstance("Casino", android.R.drawable.ic_menu_gallery)
-            historyFragment = PlaceholderFragment.newInstance("Historial", android.R.drawable.ic_menu_recent_history)
+            historyFragment = HistorialFragment()
 
-            // Se agregan todos de una vez y se ocultan todos menos "Inicio".
-            // Así, cambiar de pestaña es solo mostrar/ocultar (fluido, sin recargas ni parpadeos),
-            // en vez de destruir y recrear la vista cada vez.
             supportFragmentManager.beginTransaction()
                 .add(R.id.fragmentContainer, historyFragment, TAG_HISTORY).hide(historyFragment)
                 .add(R.id.fragmentContainer, casinoFragment, TAG_CASINO).hide(casinoFragment)
@@ -42,8 +44,6 @@ class MainActivity : AppCompatActivity() {
 
             activeFragment = homeFragment
         } else {
-            // La Activity se recreó (ej. rotación de pantalla): se recuperan los fragments
-            // ya existentes en vez de crear unos nuevos.
             homeFragment = supportFragmentManager.findFragmentByTag(TAG_HOME)!!
             searchFragment = supportFragmentManager.findFragmentByTag(TAG_SEARCH)!!
             sportsFragment = supportFragmentManager.findFragmentByTag(TAG_SPORTS)!!
@@ -75,7 +75,6 @@ class MainActivity : AppCompatActivity() {
             selected != null
         }
 
-        // Si se llegó aquí desde Saldo/Tarjeta/Monto pidiendo una pestaña específica
         aplicarPestanaSolicitada(intent)
     }
 
@@ -92,11 +91,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Cambia a la pestaña indicada de forma programática (ej. al tocar un ícono
-     * de categoría dentro de HomeFragment). Reutiliza la misma lógica del listener
-     * de la barra: mueve el indicador visual y dispara el cambio de fragment.
-     */
     fun navigateToTab(itemId: Int) {
         findViewById<BottomNavigationView>(R.id.bottomNavigation).selectedItemId = itemId
     }

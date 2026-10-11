@@ -57,6 +57,31 @@
             android:name=".ConfirmacionActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".LiveApuestaActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".fragment.HomeFragment"
+            android:exported="false"
+            android:theme="@style/Theme.UDBET"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".fragment.BusquedaFragment"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".fragment.DeportesFragment"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".fragment.HistorialFragment"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".fragment.PlaceholderFragment"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

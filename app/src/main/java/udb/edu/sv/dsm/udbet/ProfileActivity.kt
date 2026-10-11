@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -23,6 +22,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import udb.edu.sv.dsm.udbet.data.setupBottomNavigation
 import java.io.ByteArrayOutputStream
 
 class ProfileActivity : AppCompatActivity() {
@@ -37,19 +37,13 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var btnModificarPhone: TextView
     private lateinit var btnActualizar: MaterialButton
     private lateinit var btnCancelar: MaterialButton
-    private lateinit var btnLogOutSeccion: MaterialButton
     private lateinit var btnClose: ImageView
 
     private val auth = FirebaseAuth.getInstance()
-    // Nodo en Realtime Database: users/{uid}/{username, phone, profileImage}
     private val dbRef by lazy {
         FirebaseDatabase.getInstance().reference.child("users").child(auth.currentUser?.uid ?: "unknown")
     }
 
-    // Nueva contraseña pendiente de guardar (se pide junto con la actual para reautenticar)
-    private var pendingNewPassword: String? = null
-
-    // Selector de imagen de galería
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let { uploadProfileImage(it) }
@@ -71,7 +65,6 @@ class ProfileActivity : AppCompatActivity() {
         btnCancelar = findViewById(R.id.btnCancelar)
         btnClose = findViewById(R.id.btnClose)
 
-        // Tocar la foto (todo el círculo) = elegir una nueva imagen de la galería
         imgProfileCard.setOnClickListener {
             pickImageLauncher.launch("image/*")
         }
@@ -92,7 +85,6 @@ class ProfileActivity : AppCompatActivity() {
         loadUserData()
     }
 
-    /** Carga correo actual, teléfono y foto guardados */
     private fun loadUserData() {
         editEmail.setText(auth.currentUser?.email ?: "")
 
@@ -123,12 +115,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Redimensiona la imagen elegida y la sube como Base64 a Realtime Database.
-     * NOTA: para producción, lo recomendable es usar Firebase Storage para el archivo
-     * y guardar solo la URL en Realtime Database. Aquí se guarda directamente en RTDB
-     * porque así se pidió, comprimiendo la imagen para que el nodo no pese demasiado.
-     */
     private fun uploadProfileImage(uri: Uri) {
         progressUpload.visibility = ProgressBar.VISIBLE
         try {
@@ -157,7 +143,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    /** Diálogo para pedir contraseña actual + nueva contraseña (requerido para reautenticar) */
     private fun showChangePasswordDialog() {
         val container = LinearLayout(this)
         container.orientation = LinearLayout.VERTICAL
@@ -210,7 +195,6 @@ class ProfileActivity : AppCompatActivity() {
             }
     }
 
-    /** Guarda el teléfono en RTDB y, si el correo cambió, actualiza Firebase Auth */
     private fun saveChanges() {
         val newPhone = editPhone.text.toString().trim()
         val newEmail = editEmail.text.toString().trim()
@@ -219,7 +203,6 @@ class ProfileActivity : AppCompatActivity() {
         dbRef.child("phone").setValue(newPhone)
 
         if (currentUser != null && newEmail.isNotEmpty() && newEmail != currentUser.email) {
-            // Cambiar el correo también requiere reautenticación reciente.
             askForPasswordThenUpdateEmail(newEmail)
         } else {
             Toast.makeText(this, "Datos actualizados", Toast.LENGTH_SHORT).show()
