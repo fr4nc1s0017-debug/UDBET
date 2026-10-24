@@ -1,6 +1,7 @@
 package udb.edu.sv.dsm.udbet
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -37,6 +38,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var btnModificarPhone: TextView
     private lateinit var btnActualizar: MaterialButton
     private lateinit var btnCancelar: MaterialButton
+    private lateinit var btnLogout: MaterialButton
     private lateinit var btnClose: ImageView
 
     private val auth = FirebaseAuth.getInstance()
@@ -63,6 +65,7 @@ class ProfileActivity : AppCompatActivity() {
         btnModificarPhone = findViewById(R.id.btnModificarPhone)
         btnActualizar = findViewById(R.id.btnActualizar)
         btnCancelar = findViewById(R.id.btnCancelar)
+        btnLogout = findViewById(R.id.btnLogout)
         btnClose = findViewById(R.id.btnClose)
 
         imgProfileCard.setOnClickListener {
@@ -79,6 +82,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnActualizar.setOnClickListener { saveChanges() }
+        btnLogout.setOnClickListener { showLogoutConfirmation() }
 
         setupBottomNavigation(findViewById<BottomNavigationView>(R.id.bottomNavigationProfile))
 
@@ -242,5 +246,25 @@ class ProfileActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancelar", null)
             .show()
+    }
+
+    private fun showLogoutConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Cerrar sesión")
+            .setMessage("¿Seguro que deseas cerrar sesión?")
+            .setPositiveButton("Sí") { _, _ -> logout() }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun logout() {
+        auth.signOut()
+
+        val intent = Intent(this, LoginActivity::class.java).apply {
+            // Limpia el back stack para que "atrás" no regrese a pantallas con sesión
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 }

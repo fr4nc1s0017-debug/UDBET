@@ -217,6 +217,19 @@
                 app:backgroundTint="#4CD964"
                 app:cornerRadius="12dp" />
 
+            <!-- Cerrar sesión -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:text="Cerrar sesión"
+                android:textColor="#F44336"
+                android:textStyle="bold"
+                app:strokeColor="#E53935"
+                app:strokeWidth="1dp"
+                app:cornerRadius="12dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

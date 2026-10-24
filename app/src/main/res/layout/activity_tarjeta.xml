@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipToPadding="false"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationTarjeta"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,99 +25,135 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:text="Datos de la tarjeta"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="24dp" />
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Número de tarjeta"
-                android:textColor="@color/white"
-                android:layout_marginBottom="6dp" />
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="24dp"
+                android:text="Ingresa los datos para continuar"
+                android:textColor="@color/TextHint"
+                android:textSize="13sp" />
 
-            <EditText
-                android:id="@+id/editCardNumber"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/bg_search_bar"
-                android:paddingHorizontal="16dp"
-                android:textColor="@color/white"
-                android:hint="0000 0000 0000 0000"
-                android:textColorHint="@color/TextHint"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:maxLength="19"
-                android:layout_marginBottom="20dp" />
-
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="28dp">
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/CardBackground"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:strokeColor="@color/Green"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:layout_marginEnd="8dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Mes"
+                        android:layout_marginBottom="8dp"
+                        android:text="Número de tarjeta"
                         android:textColor="@color/white"
-                        android:layout_marginBottom="6dp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/spinnerMes"
+                    <EditText
+                        android:id="@+id/editCardNumber"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="52dp"
+                        android:layout_marginBottom="20dp"
                         android:background="@drawable/bg_search_bar"
-                        android:popupBackground="@color/CardBackground" />
-                </LinearLayout>
+                        android:hint="0000 0000 0000 0000"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:maxLength="19"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/TextHint" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="8dp">
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Año"
-                        android:textColor="@color/white"
-                        android:layout_marginBottom="6dp" />
+                        android:orientation="horizontal">
 
-                    <Spinner
-                        android:id="@+id/spinnerAnio"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/bg_search_bar"
-                        android:popupBackground="@color/CardBackground" />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Mes"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <Spinner
+                                android:id="@+id/spinnerMes"
+                                android:layout_width="match_parent"
+                                android:layout_height="52dp"
+                                android:background="@drawable/bg_search_bar"
+                                android:popupBackground="@color/CardBackground" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:text="Año"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <Spinner
+                                android:id="@+id/spinnerAnio"
+                                android:layout_width="match_parent"
+                                android:layout_height="52dp"
+                                android:background="@drawable/bg_search_bar"
+                                android:popupBackground="@color/CardBackground" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/DarkBlue"
-                android:textSize="11sp"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="Tus datos se usan únicamente para esta operación"
+                android:textColor="@color/TextHint"
+                android:textSize="12sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnContinuarTarjeta"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:text="Continuar"
-                android:textColor="@color/Green"
-                app:cornerRadius="12dp" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/Green"
+                app:cornerRadius="14dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
