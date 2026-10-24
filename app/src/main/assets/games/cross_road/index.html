@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Cross Road Bet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <header>
+        <div class="brand">
+            CROSS ROAD
+            <small>BET</small>
+        </div>
+        <div class="stats">
+            <div class="stat">
+                <span>Apuesta</span>
+                <strong class="gold" id="betDisplay">$0</strong>
+            </div>
+            <div class="stat">
+                <span>Saldo</span>
+                <strong id="balanceDisplay">$1000</strong>
+            </div>
+        </div>
+    </header>
+
+    <div class="canvas-wrap">
+        <canvas id="game"></canvas>
+        <div class="overlay">
+            <div class="overlay-top">
+                <div class="pill mult">
+                    <span>Multiplicador</span>
+                    <strong id="multDisplay">1.00x</strong>
+                </div>
+                <div class="pill win">
+                    <span>Ganancia</span>
+                    <strong id="winDisplay">$0</strong>
+                </div>
+            </div>
+            <div class="overlay-center">
+                <div id="bigMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+
+        <!-- FASE DE APUESTA -->
+        <div id="betControls" class="row">
+            <button class="chip chip-10"  data-value="10">10</button>
+            <button class="chip chip-50"  data-value="50">50</button>
+            <button class="chip chip-100" data-value="100">100</button>
+            <button class="chip chip-500" data-value="500">500</button>
+        </div>
+
+        <div id="betControls2" class="row">
+            <button id="btnClear"  class="btn-ghost">Limpiar</button>
+            <button id="btnRepeat" class="btn-ghost">Repetir</button>
+            <button id="btnPlay"   class="btn-play">▶ JUGAR</button>
+        </div>
+
+        <!-- FASE DE JUEGO -->
+        <div id="playControls" class="row hidden">
+            <button id="btnCash" class="btn-cash">💰 COBRAR</button>
+        </div>
+
+        <div id="dpad" class="dpad hidden">
+            <button class="up"    data-dir="up">▲</button>
+            <button class="left"  data-dir="left">◀</button>
+            <button class="down"  data-dir="down">▼</button>
+            <button class="right" data-dir="right">▶</button>
+        </div>
+
+        <!-- FIN DE RONDA -->
+        <div id="endControls" class="row hidden">
+            <button id="btnNext" class="btn-play">NUEVA RONDA</button>
+        </div>
+
+        <div id="hint" class="hint">
+            Avanza con <b>↑↓←→</b> o <b>WASD</b> · Cobra con <b>Espacio</b>
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

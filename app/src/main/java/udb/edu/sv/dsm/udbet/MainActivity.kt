@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import udb.edu.sv.dsm.udbet.data.EXTRA_SELECTED_TAB
 import udb.edu.sv.dsm.udbet.fragment.BusquedaFragment
+import udb.edu.sv.dsm.udbet.fragment.CasinoFragment
 import udb.edu.sv.dsm.udbet.fragment.DeportesFragment
 import udb.edu.sv.dsm.udbet.fragment.HistorialFragment
 import udb.edu.sv.dsm.udbet.fragment.HomeFragment
 import udb.edu.sv.dsm.udbet.fragment.PlaceholderFragment
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             homeFragment = HomeFragment()
             searchFragment = BusquedaFragment()
             sportsFragment = DeportesFragment()
-            casinoFragment = PlaceholderFragment.newInstance("Casino", android.R.drawable.ic_menu_gallery)
+            casinoFragment = CasinoFragment()
             historyFragment = HistorialFragment()
 
             supportFragmentManager.beginTransaction()
