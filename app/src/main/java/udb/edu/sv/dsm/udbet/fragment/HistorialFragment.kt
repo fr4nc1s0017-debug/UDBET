@@ -13,14 +13,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import udb.edu.sv.dsm.udbet.R
 
-// Necesita constructor vacío (valores por defecto) para que Firebase lo deserialice solo
-data class HistorialEntry(
-    val gameName: String = "",
-    val won: Double = 0.0,
-    val lost: Double = 0.0,
-    val timestamp: Long = 0L
-)
-
 class HistorialFragment : Fragment(R.layout.fragment_historial) {
 
     private var container: LinearLayout? = null
@@ -54,7 +46,7 @@ class HistorialFragment : Fragment(R.layout.fragment_historial) {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Sin conexión o sin permisos: se deja la lista como estaba
+                // Sin conexión o sin permisos
             }
         })
     }

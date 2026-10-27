@@ -16,33 +16,55 @@
         android:orientation="vertical"
         android:padding="14dp">
 
-        <TextView
-            android:id="@+id/txtMatchSchedule"
-            android:layout_width="wrap_content"
+        <!-- Fila superior: Liga, Hora y Estado en vivo -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/TextHint"
-            android:textSize="11sp"
-            android:layout_marginBottom="10dp"
-            tools:text="Premier League · Hoy 14:00" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
 
+            <TextView
+                android:id="@+id/txtMatchSchedule"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/TextHint"
+                android:textSize="12sp"
+                tools:text="Premier League · Hoy 14:00" />
+
+            <TextView
+                android:id="@+id/txtLiveIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="● EN VIVO"
+                android:textColor="#E53935"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <!-- Equipos -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="14dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="6dp">
+                android:layout_marginBottom="8dp">
 
-                <View
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:background="@drawable/bg_search_bar"
-                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_default_avatar"
+                    app:tint="@color/TextHint"
+                    android:layout_marginEnd="12dp" />
 
                 <TextView
                     android:id="@+id/txtTeamA"
@@ -50,7 +72,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
                     tools:text="Equipo1" />
             </LinearLayout>
 
@@ -60,11 +83,12 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <View
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:background="@drawable/bg_search_bar"
-                    android:layout_marginEnd="10dp" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_default_avatar"
+                    app:tint="@color/TextHint"
+                    android:layout_marginEnd="12dp" />
 
                 <TextView
                     android:id="@+id/txtTeamB"
@@ -72,12 +96,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
                     tools:text="Equipo2" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Los botones de resultado (2 para basquetball, 3 para fútbol) se arman por código -->
+        <!-- Botones de apuesta -->
         <LinearLayout
             android:id="@+id/outcomesContainer"
             android:layout_width="match_parent"

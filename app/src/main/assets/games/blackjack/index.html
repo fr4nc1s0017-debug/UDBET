@@ -9,17 +9,16 @@
 <body>
 
 <div class="app">
-
     <header>
         <h1>BLACKJACK</h1>
         <div class="stats">
             <div class="stat">
                 <span>Apuesta</span>
-                <strong class="bet-value" id="betDisplay">$0</strong>
+                <strong class="bet-value" id="betDisplay">$0.00</strong>
             </div>
             <div class="stat">
                 <span>Saldo</span>
-                <strong id="balanceDisplay">$1000</strong>
+                <strong id="balanceDisplay">$0.00</strong>
             </div>
         </div>
     </header>
@@ -29,11 +28,9 @@
             <div class="label">Crupier <span class="score" id="dealerScore"></span></div>
             <div class="cards" id="dealerCards"></div>
         </div>
-
         <div class="divider">
             <div id="message">Haz tu apuesta</div>
         </div>
-
         <div class="area">
             <div class="label">Jugador</div>
             <div class="hands" id="playerHands"></div>
@@ -52,12 +49,10 @@
             <button id="btnDeal"   class="btn-primary">Repartir</button>
             <button id="btnClear"  class="btn-ghost">Limpiar</button>
             <button id="btnRepeat" class="btn-ghost">Repetir apuesta</button>
-
             <button id="btnHit"    class="btn-primary">Pedir</button>
             <button id="btnStand"  class="btn-gold">Plantarse</button>
             <button id="btnDouble" class="btn-danger">Doblar</button>
             <button id="btnSplit"  class="btn-ghost">Dividir</button>
-
             <button id="btnNext"   class="btn-primary">Nueva mano</button>
         </div>
 
@@ -65,9 +60,9 @@
             Blackjack paga 3:2 · El crupier se planta en 17 · Se juega con 6 barajas
         </div>
     </section>
-
 </div>
 
-<script src="blackjack.js.js"></script>
+<!-- CORREGIDO: Ahora llama a script.js -->
+<script src="script.js"></script>
 </body>
 </html>

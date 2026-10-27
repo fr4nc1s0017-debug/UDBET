@@ -13,6 +13,7 @@ data class Match(
     val teamA: String,
     val teamB: String,
     val schedule: String, // "Hoy 14:00"
+    val isLive: Boolean = false, // NUEVO CAMPO: Para saber si está en vivo
     val outcomes: List<Outcome> // 3 para fútbol (Win/Draw/Lose), 2 para basquetball (Win/Lose)
 )
 
@@ -22,6 +23,7 @@ object MatchRepository {
         Match(
             id = "m1", sport = "futbol", league = "Premier League",
             teamA = "Manchester United", teamB = "Liverpool", schedule = "Hoy 14:00",
+            isLive = true, // Ejemplo: Este partido está en vivo
             outcomes = listOf(
                 Outcome("Win", 40, 2.34),
                 Outcome("Draw", 28, 3.34),

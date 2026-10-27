@@ -13,6 +13,8 @@ android {
 
     defaultConfig {
         applicationId = "udb.edu.sv.dsm.udbet"
+
+        // ⚠️ RECOMENDACIÓN: Cambia esto a 24 para que funcione en celulares reales
         minSdk = 37
         targetSdk = 37
         versionCode = 1
@@ -54,4 +56,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // ✅ AGREGADO: Dependencia para el método clásico de Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
 }

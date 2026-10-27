@@ -2,6 +2,7 @@ package udb.edu.sv.dsm.udbet.data
 
 import android.app.Activity
 import android.webkit.JavascriptInterface
+import android.webkit.WebView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -10,30 +11,24 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.MutableData
 import com.google.firebase.database.Transaction
 
-/**
- * Puente entre el JS de los juegos (tragamonedas, blackjack, cross road) y Firebase.
- * Cada juego ya trae su propio "saldo" interno (state.balance / G.balance), que
- * GameActivity sincroniza con el saldo real al cargar la página. Este puente solo
- * refleja en Firebase cada movimiento real de dinero que ocurre dentro del juego:
- *
- *  - placeBet(monto): se llama justo cuando el juego descuenta una apuesta
- *  - reportResult(gano, pago): se llama al resolver la ronda, con lo que el
- *    juego le devuelve al jugador (0 si perdió todo)
- *
- * Se usa runTransaction (igual que en MontoActivity) para evitar que dos
- * escrituras casi simultáneas dejen el saldo en un estado inconsistente.
- */
 class GameBridge(
     private val activity: Activity,
-    private val gameName: String
+    private val gameName: String,
+    private val webView: WebView,
+    private val gameFolder: String
 ) {
-
     private val uid get() = FirebaseAuth.getInstance().currentUser?.uid
+    private val balanceRef get() = uid?.let {
+        FirebaseDatabase.getInstance().reference.child("users").child(it).child("balance")
+    }
 
-    private val balanceRef
-        get() = uid?.let {
-            FirebaseDatabase.getInstance().reference.child("users").child(it).child("balance")
-        }
+    // Variable JS según el juego
+    private val balanceVar = when (gameFolder) {
+        "traga_monedas" -> "state.balance"
+        "blackjack" -> "state.balance"
+        "cross_road" -> "G.balance"
+        else -> "balance"
+    }
 
     @JavascriptInterface
     fun placeBet(amount: Double) {
@@ -41,10 +36,22 @@ class GameBridge(
         ref.runTransaction(object : Transaction.Handler {
             override fun doTransaction(currentData: MutableData): Transaction.Result {
                 val current = currentData.getValue(Double::class.java) ?: 0.0
+                if (current < amount) {
+                    return Transaction.abort() // No hay saldo suficiente
+                }
                 currentData.value = current - amount
                 return Transaction.success(currentData)
             }
-            override fun onComplete(error: DatabaseError?, committed: Boolean, snapshot: DataSnapshot?) {}
+
+            override fun onComplete(error: DatabaseError?, committed: Boolean, snapshot: DataSnapshot?) {
+                if (committed) {
+                    val newBalance = snapshot?.getValue(Double::class.java) ?: 0.0
+                    // Actualizamos la UI del juego inmediatamente
+                    activity.runOnUiThread {
+                        webView.evaluateJavascript("$balanceVar = $newBalance; if (typeof updateUI === 'function') updateUI();", null)
+                    }
+                }
+            }
         })
     }
 
@@ -59,19 +66,25 @@ class GameBridge(
                 currentData.value = current + payout
                 return Transaction.success(currentData)
             }
-            override fun onComplete(error: DatabaseError?, committed: Boolean, snapshot: DataSnapshot?) {}
+
+            override fun onComplete(error: DatabaseError?, committed: Boolean, snapshot: DataSnapshot?) {
+                if (committed) {
+                    val newBalance = snapshot?.getValue(Double::class.java) ?: 0.0
+                    activity.runOnUiThread {
+                        webView.evaluateJavascript("$balanceVar = $newBalance; if (typeof updateUI === 'function') updateUI();", null)
+                    }
+                }
+            }
         })
 
         FirebaseDatabase.getInstance().reference
             .child("users").child(currentUid).child("history").push()
-            .setValue(
-                mapOf(
-                    "gameName" to gameName,
-                    "won" to payout,
-                    "lost" to 0.0,
-                    "timestamp" to System.currentTimeMillis()
-                )
-            )
+            .setValue(mapOf(
+                "gameName" to gameName,
+                "won" to payout,
+                "lost" to 0.0,
+                "timestamp" to System.currentTimeMillis()
+            ))
 
         activity.runOnUiThread {
             val msg = if (won) "Ganaste $%.2f".format(payout) else "Perdiste la ronda"

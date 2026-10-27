@@ -15,10 +15,13 @@ import udb.edu.sv.dsm.udbet.R
 object MatchCardHelper {
 
     private fun colorForOutcome(label: String): Int = when (label) {
-        "Win" -> Color.parseColor("#4CD964")
-        "Draw" -> Color.parseColor("#8E8E93")
-        else -> Color.parseColor("#E53935") // "Lose"
+        "Win" -> Color.parseColor("#4CD964")  // Verde
+        "Draw" -> Color.parseColor("#8E8E93") // Gris
+        else -> Color.parseColor("#E53935")   // Rojo
     }
+
+    // Color de fondo oscuro para los botones
+    private val darkButtonBg = Color.parseColor("#2A2A35")
 
     fun buildCard(
         context: Context,
@@ -28,8 +31,18 @@ object MatchCardHelper {
     ): View {
         val card = LayoutInflater.from(context).inflate(R.layout.item_match_card, parent, false)
 
+        // Configurar textos de cabecera
         card.findViewById<TextView>(R.id.txtMatchSchedule).text =
             "${match.league} · ${match.schedule}"
+
+        // Configurar indicador en vivo
+        val liveIndicator = card.findViewById<TextView>(R.id.txtLiveIndicator)
+        if (match.isLive) {
+            liveIndicator.visibility = View.VISIBLE
+        } else {
+            liveIndicator.visibility = View.GONE
+        }
+
         card.findViewById<TextView>(R.id.txtTeamA).text = match.teamA
         card.findViewById<TextView>(R.id.txtTeamB).text = match.teamB
 
@@ -39,7 +52,7 @@ object MatchCardHelper {
         match.outcomes.forEachIndexed { index, outcome ->
             val button = buildOutcomeView(context, outcome)
             val params = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-            params.marginStart = if (index == 0) 0 else dp(context, 6)
+            params.marginStart = if (index == 0) 0 else dp(context, 8)
             button.layoutParams = params
             button.setOnClickListener { onOutcomeSelected(match, outcome) }
             outcomesContainer.addView(button)
@@ -53,30 +66,39 @@ object MatchCardHelper {
         container.orientation = LinearLayout.VERTICAL
         container.gravity = Gravity.CENTER
 
+        // Fondo oscuro con esquinas redondeadas
         val bg = GradientDrawable()
         bg.cornerRadius = dp(context, 10).toFloat()
-        bg.setColor(colorForOutcome(outcome.label))
-        container.background = bg
-        container.setPadding(dp(context, 6), dp(context, 8), dp(context, 6), dp(context, 8))
+        bg.setColor(darkButtonBg)
+        // Borde sutil del color del resultado
+        bg.setStroke(dp(context, 1), colorForOutcome(outcome.label))
 
+        container.background = bg
+        container.setPadding(dp(context, 6), dp(context, 10), dp(context, 6), dp(context, 10))
+
+        // Texto del porcentaje (ej. 40%)
         val txtPercent = TextView(context)
         txtPercent.text = "${outcome.percent}%"
         txtPercent.textSize = 13f
-        txtPercent.setTextColor(Color.parseColor("#1A1A1A"))
+        txtPercent.setTextColor(Color.WHITE)
         txtPercent.gravity = Gravity.CENTER
         txtPercent.setTypeface(null, Typeface.BOLD)
 
+        // Texto de la etiqueta (Win/Draw/Lose)
         val txtLabel = TextView(context)
         txtLabel.text = outcome.label
         txtLabel.textSize = 10f
-        txtLabel.setTextColor(Color.parseColor("#1A1A1A"))
+        txtLabel.setTextColor(colorForOutcome(outcome.label)) // Texto de color
         txtLabel.gravity = Gravity.CENTER
+        txtLabel.setTypeface(null, Typeface.BOLD)
 
+        // Texto de la cuota (ej. 2.34)
         val txtOdd = TextView(context)
         txtOdd.text = outcome.odd.toString()
-        txtOdd.textSize = 11f
-        txtOdd.setTextColor(Color.parseColor("#1A1A1A"))
+        txtOdd.textSize = 12f
+        txtOdd.setTextColor(Color.WHITE)
         txtOdd.gravity = Gravity.CENTER
+        txtOdd.setTypeface(null, Typeface.BOLD)
 
         container.addView(txtPercent)
         container.addView(txtLabel)

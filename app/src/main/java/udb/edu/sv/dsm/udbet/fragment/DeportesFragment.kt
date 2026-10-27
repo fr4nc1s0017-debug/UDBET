@@ -4,6 +4,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -17,69 +18,67 @@ import udb.edu.sv.dsm.udbet.data.MatchRepository
 
 class DeportesFragment : Fragment(R.layout.fragment_deportes) {
 
+    private var contenedorPrincipal: LinearLayout? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Asegúrate de que este ID exista en fragment_deportes.xml
+        contenedorPrincipal = view.findViewById(R.id.deportesContainer)
         val editBuscar = view.findViewById<EditText>(R.id.editBuscarDeportes)
-        val container = view.findViewById<LinearLayout>(R.id.partidosContainer)
 
-        renderMatches(container, MatchRepository.matches)
+        cargarPartidosAgrupados(MatchRepository.matches)
 
-        editBuscar.addTextChangedListener(object : TextWatcher {
+        // Buscador dentro de Deportes
+        editBuscar?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val query = s?.toString().orEmpty()
-                val lista = if (query.isBlank()) MatchRepository.matches else MatchRepository.search(query)
-                renderMatches(container, lista)
+                if (query.isBlank()) {
+                    cargarPartidosAgrupados(MatchRepository.matches)
+                } else {
+                    cargarPartidosAgrupados(MatchRepository.search(query))
+                }
             }
         })
     }
 
-    private fun renderMatches(container: LinearLayout, matches: List<Match>) {
+    private fun cargarPartidosAgrupados(matches: List<Match>) {
+        val container = contenedorPrincipal ?: return
         container.removeAllViews()
 
         if (matches.isEmpty()) {
             val txt = TextView(requireContext())
-            txt.text = "Sin partidos para esa búsqueda"
+            txt.text = "No hay partidos disponibles"
             txt.setTextColor(resources.getColor(R.color.TextHint, null))
+            txt.gravity = Gravity.CENTER
+            txt.setPadding(0, 50, 0, 0)
             container.addView(txt)
             return
         }
 
-        val grupos = LinkedHashMap<String, MutableList<Match>>()
-        matches.forEach { match ->
-            val titulo = "${tituloDeporte(match.sport)} - Liga de ${tituloDeporte(match.sport).lowercase()}"
-            grupos.getOrPut(titulo) { mutableListOf() }.add(match)
-        }
+        // Agrupamos los partidos por su propiedad 'league'
+        val partidosPorLiga = matches.groupBy { it.league }
 
-        grupos.forEach { (titulo, lista) ->
-            val header = TextView(requireContext())
-            header.text = titulo
-            header.setTextColor(resources.getColor(R.color.white, null))
-            header.textSize = 13f
-            header.setTypeface(null, Typeface.BOLD)
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.topMargin = dp(16)
-            params.bottomMargin = dp(10)
-            header.layoutParams = params
-            container.addView(header)
+        partidosPorLiga.forEach { (liga, partidos) ->
+            // 1. Agregamos el Título de la Liga
+            val tituloLiga = TextView(requireContext())
+            tituloLiga.text = liga
+            tituloLiga.setTextColor(resources.getColor(R.color.white, null))
+            tituloLiga.textSize = 16f
+            tituloLiga.setTypeface(null, Typeface.BOLD)
+            tituloLiga.setPadding(0, dp(20), 0, dp(10))
+            container.addView(tituloLiga)
 
-            lista.forEach { match ->
+            // 2. Agregamos cada partido de esa liga
+            partidos.forEach { match ->
                 val card = MatchCardHelper.buildCard(requireContext(), container, match) { m, outcome ->
                     BetDialogHelper.showStakeDialog(requireContext(), m, outcome)
                 }
                 container.addView(card)
             }
         }
-    }
-
-    private fun tituloDeporte(sport: String) = when (sport) {
-        "futbol" -> "Futbol"
-        "basquetball" -> "Basquetball"
-        else -> sport
     }
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()

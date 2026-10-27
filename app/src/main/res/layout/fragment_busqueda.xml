@@ -17,15 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/bg_search_bar"
-            android:hint="Buscar"
+            android:hint="Buscar equipos, ligas..."
             android:textColorHint="@color/TextHint"
-            android:textColor="@android:color/black"
+            android:textColor="@color/white"
             android:paddingHorizontal="16dp"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="8dp"
             android:inputType="text"
             android:imeOptions="actionSearch"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="24dp" />
 
         <!-- Accesos rápidos a ligas (estado inicial, sin búsqueda activa) -->
         <LinearLayout
