@@ -24,8 +24,9 @@
 ---
 
 ##  Manual técnico
-
+**Tecnico
 [ Consultar manual técnico ](https://docs.google.com/document/d/1Abl2rAIQ_I4QzhHqjXtWt1RXaKy6A68t/edit?usp=sharing)
+**Usuario
 [ Consultar manual usuario ](https://1drv.ms/w/c/22fbba145bf53de8/IQABW1mIHkOST7cOPg6hkCHsAYHhRk8nVA9Q4pQoqwbYwXA?e=UIc0PS)
 ---
 
