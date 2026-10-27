@@ -671,7 +671,14 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* =========================================================
-   INICIO
+   INICIO Y SINCRONIZACIÓN CON ANDROID
    ========================================================= */
 updateUI();
 requestAnimationFrame(loop);
+
+// ESTA ES LA FUNCIÓN CLAVE PARA ANDROID
+window.actualizarSaldoDesdeAndroid = function(nuevoSaldo) {
+  console.log("Android inyectó el saldo: " + nuevoSaldo);
+  G.balance = nuevoSaldo;
+  updateUI(); // Vuelve a dibujar para desbloquear las fichas y el botón
+};

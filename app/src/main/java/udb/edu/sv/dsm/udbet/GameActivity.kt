@@ -9,7 +9,6 @@ import android.webkit.ConsoleMessage
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -80,10 +79,7 @@ class GameActivity : AppCompatActivity() {
                     val balance = snapshot.getValue(Double::class.java) ?: 0.0
                     Log.d("UDBET_DEBUG", "Saldo desde Firebase: $balance")
 
-                    // Mostramos un Toast para que TÚ veas que sí se está leyendo
-                    Toast.makeText(this@GameActivity, "Saldo Firebase: $balance", Toast.LENGTH_SHORT).show()
-
-                    // Inyectamos el saldo
+                    // Inyectamos el saldo (SIN Toast)
                     val js = "if (typeof window.actualizarSaldoDesdeAndroid === 'function') { window.actualizarSaldoDesdeAndroid($balance); } else { console.log('ERROR: actualizarSaldoDesdeAndroid NO EXISTE'); }"
                     webView.evaluateJavascript(js) { result ->
                         Log.d("UDBET_DEBUG", "Resultado JS: $result")

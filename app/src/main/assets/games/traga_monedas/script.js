@@ -562,7 +562,7 @@ window.addEventListener('resize', () => {
 });
 
 /* =========================================================
-   INICIO
+   INICIO Y SINCRONIZACIÓN CON ANDROID
    ========================================================= */
 
 buildPaytable();
@@ -573,3 +573,10 @@ updateUI();
 // Esperar a que las fuentes/emoji carguen para medir bien
 setTimeout(updateSymbolSize, 200);
 window.addEventListener('load', updateSymbolSize);
+
+// ESTA ES LA FUNCIÓN CLAVE PARA ANDROID
+window.actualizarSaldoDesdeAndroid = function(nuevoSaldo) {
+  console.log("Android inyectó el saldo: " + nuevoSaldo);
+  state.balance = nuevoSaldo;
+  updateUI(); // Vuelve a dibujar para desbloquear las fichas y el botón
+};
