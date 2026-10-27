@@ -25,7 +25,7 @@
 
 ##  Manual técnico
 
-[ Consultar manual técnico de UDBET](https://docs.google.com/document/d/1Abl2rAIQ_I4QzhHqjXtWt1RXaKy6A68t/edit?usp=sharing)
+[ Consultar manual técnico ](https://docs.google.com/document/d/1Abl2rAIQ_I4QzhHqjXtWt1RXaKy6A68t/edit?usp=sharing)
 
 ---
 
